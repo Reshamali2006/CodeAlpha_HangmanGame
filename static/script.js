@@ -67,7 +67,11 @@ function showLevelSelect() {
     splashScreen.hidden = true;
     levelScreen.hidden = false;
 
-    unlockedLevel = Number(localStorage.getItem(storageKey(currentMode))) || 1;
+    try {
+        unlockedLevel = Number(localStorage.getItem(storageKey(currentMode))) || 1;
+    } catch (error) {
+        unlockedLevel = 1;
+    }
     document.getElementById("mode-title").textContent =
         `${currentMode[0].toUpperCase()}${currentMode.slice(1)} Levels`;
 
@@ -295,9 +299,16 @@ function finishGame() {
 function unlockNextLevel() {
     if (currentLevel < TOTAL_LEVELS) {
         unlockedLevel = Math.max(unlockedLevel, currentLevel + 1);
-        localStorage.setItem(storageKey(currentMode), unlockedLevel);
         nextLevelButton.textContent = `Next Level ${currentLevel + 1} →`;
         nextLevelButton.hidden = false;
+        nextLevelButton.style.display = "inline-block";
+        nextLevelButton.scrollIntoView({ behavior: "smooth", block: "nearest" });
+
+        try {
+            localStorage.setItem(storageKey(currentMode), unlockedLevel);
+        } catch (error) {
+            // The current game should still advance if browser storage is unavailable.
+        }
     } else {
         messageElement.textContent =
             `Amazing! You completed all ${TOTAL_LEVELS} ${currentMode} levels! 🏆`;
