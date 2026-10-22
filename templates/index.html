@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hangman Quest</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- CSS se banne wala 3D-style background scene -->
+    <div class="three-d-scene" aria-hidden="true">
+        <div class="scene-grid"></div>
+        <div class="shape cube cube-one"><span></span></div>
+        <div class="shape cube cube-two"><span></span></div>
+        <div class="shape cube cube-three"><span></span></div>
+        <div class="shape orb orb-one"></div>
+        <div class="shape orb orb-two"></div>
+        <div class="shape ring ring-one"></div>
+        <div class="shape ring ring-two"></div>
+    </div>
+
+    <main class="app-card">
+        <!-- Opening logo screen -->
+        <section id="splash-screen" class="screen splash-screen">
+            <div class="app-logo" aria-label="Hangman Quest logo">
+                <span class="logo-spark">✦</span>
+                <span class="logo-letter">H</span>
+            </div>
+            <p class="eyebrow">WELCOME TO</p>
+            <h1>Hangman Quest</h1>
+            <p class="subtitle">Think fast. Find the words. Beat every level.</p>
+            <button id="enter-app-button" class="primary-button">
+                Enter Game
+            </button>
+        </section>
+
+        <!-- Difficulty selection screen -->
+        <section id="home-screen" class="screen" hidden>
+            <header class="brand-header">
+                <div class="mini-logo">H</div>
+                <div>
+                    <p class="eyebrow">WORD ADVENTURE</p>
+                    <h1>Hangman Quest</h1>
+                </div>
+            </header>
+
+            <p class="page-intro">Choose your difficulty</p>
+
+            <div class="difficulty-options">
+                <button class="difficulty-card basic" data-mode="basic">
+                    <span class="difficulty-icon">🌱</span>
+                    <strong>Basic</strong>
+                    <span>Start easy and warm up</span>
+                    <small>20 levels</small>
+                </button>
+
+                <button class="difficulty-card medium" data-mode="medium">
+                    <span class="difficulty-icon">⚡</span>
+                    <strong>Medium</strong>
+                    <span>Ready for a challenge?</span>
+                    <small>20 levels</small>
+                </button>
+
+                <button class="difficulty-card hard" data-mode="hard">
+                    <span class="difficulty-icon">🔥</span>
+                    <strong>Hard</strong>
+                    <span>For word masters</span>
+                    <small>20 levels</small>
+                </button>
+            </div>
+        </section>
+
+        <!-- Level selection screen -->
+        <section id="level-screen" class="screen" hidden>
+            <div class="screen-heading">
+                <button id="back-to-difficulty" class="small-button">
+                    ← Back
+                </button>
+                <div class="brand-title">Hangman Quest</div>
+                <div class="heading-spacer"></div>
+            </div>
+
+            <p id="mode-title" class="page-intro">Basic Levels</p>
+            <p class="subtitle">Complete a level to unlock the next one.</p>
+            <div id="levels" class="levels"></div>
+        </section>
+
+        <!-- Game screen -->
+        <section id="game-screen" class="screen" hidden>
+            <div class="top-bar">
+                <button id="home-button" class="small-button">⌂ Levels</button>
+                <div id="level-title">Basic · Level 1</div>
+                <div id="timer">⏱ 30</div>
+            </div>
+
+            <div id="hangman" aria-label="Hangman drawing">
+                <div class="gallows"></div>
+                <div class="person head"></div>
+                <div class="person body"></div>
+                <div class="person arm-left"></div>
+                <div class="person arm-right"></div>
+                <div class="person leg-left"></div>
+                <div class="person leg-right"></div>
+            </div>
+
+            <p id="word" class="word"></p>
+            <p id="guesses">Words: 0 / 3 · Wrong guesses: 0 / 6</p>
+            <p id="message">Find the hidden word!</p>
+
+            <div id="keyboard" class="keyboard"></div>
+
+            <div class="controls">
+                <button id="previous-button" class="small-button">
+                    ← Previous
+                </button>
+                <button id="pause-button" class="small-button">
+                    ⏸ Pause
+                </button>
+                <button id="restart-button" class="small-button">
+                    ↻ Restart
+                </button>
+            </div>
+
+            <div id="pause-overlay" class="overlay" hidden>
+                <div class="overlay-box">
+                    <h2 id="overlay-title">Game Paused</h2>
+                    <p id="countdown">Your time is paused.</p>
+                    <button id="resume-button" class="primary-button">
+                        Resume
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
