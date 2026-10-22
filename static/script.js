@@ -15,7 +15,7 @@ const levelTitle = document.getElementById("level-title");
 const pauseOverlay = document.getElementById("pause-overlay");
 const overlayTitle = document.getElementById("overlay-title");
 const countdownElement = document.getElementById("countdown");
-const controls = document.querySelector(".controls");
+const nextLevelButton = document.getElementById("next-level-button");
 
 let currentMode = "basic";
 let currentLevel = 1;
@@ -106,7 +106,7 @@ async function startLevel(level) {
     gameFinished = false;
     currentLevel = level;
 
-    document.getElementById("next-level-button")?.remove();
+    nextLevelButton.hidden = true;
     pauseOverlay.hidden = true;
 
     try {
@@ -291,13 +291,8 @@ function unlockNextLevel() {
     if (currentLevel < TOTAL_LEVELS) {
         unlockedLevel = Math.max(unlockedLevel, currentLevel + 1);
         localStorage.setItem(storageKey(currentMode), unlockedLevel);
-
-        const button = document.createElement("button");
-        button.id = "next-level-button";
-        button.className = "primary-button";
-        button.textContent = "Next Level →";
-        button.addEventListener("click", () => startLevel(currentLevel + 1));
-        controls.appendChild(button);
+        nextLevelButton.textContent = `Next Level ${currentLevel + 1} →`;
+        nextLevelButton.hidden = false;
     } else {
         messageElement.textContent =
             `Amazing! You completed all ${TOTAL_LEVELS} ${currentMode} levels! 🏆`;
@@ -327,6 +322,12 @@ document.getElementById("previous-button").addEventListener("click", () => {
 
 document.getElementById("restart-button").addEventListener("click", () => {
     startLevel(currentLevel);
+});
+
+nextLevelButton.addEventListener("click", () => {
+    if (currentLevel < TOTAL_LEVELS) {
+        startLevel(currentLevel + 1);
+    }
 });
 
 document.getElementById("pause-button").addEventListener("click", () => {
