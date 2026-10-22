@@ -195,7 +195,12 @@ async function sendGuess(letter, button) {
 
         drawHangman(result.wrong_guesses);
 
-        if (result.level_complete) {
+        // Trust the completed word count as a fallback as well as the API flag.
+        // This ensures the next-level action appears as soon as the target is reached.
+        const levelComplete = result.level_complete === true ||
+            Number(result.words_found) >= Number(result.words_required);
+
+        if (levelComplete) {
             wordsFound = result.words_found;
             finishGame();
             messageElement.textContent =
