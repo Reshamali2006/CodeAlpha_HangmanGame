@@ -1,4 +1,4 @@
-# codealpha_hangman game
+# codealpha_HangmanGame
 
 A classic Hangman word-guessing game built with HTML, CSS and JavaScript.
 
